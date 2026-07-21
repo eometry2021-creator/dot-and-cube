@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bqdsyoy2waoba"]
+
+[ext_resource type="Texture2D" uid="uid://bmtctsi272hh6" path="res://artwork/dot_24.png" id="1_p4642"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gj63"]
+
+[node name="DotBase" type="Node2D" unique_id=1777528774]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655216558]
+texture = ExtResource("1_p4642")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=564099289]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1464794294]
+shape = SubResource("CircleShape2D_8gj63")
