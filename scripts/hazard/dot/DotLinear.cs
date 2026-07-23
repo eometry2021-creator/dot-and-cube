@@ -1,11 +1,10 @@
 using Godot;
 using System.Collections.Generic;
-public partial class DotLinear : Node2D
+public partial class DotLinear : DotBase
 {
-	// ===== 运动参数 =====
+	// ===== 导出参数 =====
 	[Export] // 每秒移动速度
 	public float Speed { get; set; } = 150f;
-	// 两种路径模式的枚举
 	public enum PathModeEnum
 	{
 		ClosedLoop,
@@ -22,18 +21,16 @@ public partial class DotLinear : Node2D
 		new(400, 400),
 		new(200, 400)
 	};
+
 	// ===== 内部变量 =====
-	private double _time = 0.0;
-	private bool _isValid = false;
 	private List<float> _cumulativeTimes = new(); // 累计时间表
+	//TODO：优化架构，作为数组声明而非列表
 	private float _distance;                      // 累计距离
-	private float _period;                        // 周期
 	private float _timeForward;                   // 正向时间，仅应用于 BackAndForth，等于半周期
 	private float _timeEffective;                 // 有效时间，在 BackAndForth 的情况下使用三角波折叠映射进度
 	private int _currentSegmentIndex;             // 当前线段指数，动点处于 Waypoints[i] 与 Waypoints[i+1] 的区间
 
-	// 初始化
-	public override void _Ready()
+	protected override void Initialize()
 	{
 		if (Waypoints.Length < 2)
 		{
@@ -111,29 +108,10 @@ public partial class DotLinear : Node2D
 		}
 	}
 
-	// 方法：更新坐标
-	private void UpdatePosition()
+	protected override void UpdatePosition()
 	{
-		// 始/末路径点坐标
-		Vector2 startPoint = Waypoints[_currentSegmentIndex];
-		Vector2 endPoint = Waypoints[(_currentSegmentIndex + 1) % Waypoints.Length];
-		// 插值比例
-		float segmentProgress = (_timeEffective - _cumulativeTimes[_currentSegmentIndex]) / 
-			(_cumulativeTimes[_currentSegmentIndex + 1] - _cumulativeTimes[_currentSegmentIndex]);
-
-		GlobalPosition = startPoint.Lerp(endPoint, segmentProgress);
-	}
-	public override void _Process(double delta)
-	{
-		if (!_isValid) return; // 未初始化成功，不执行任何移动逻辑
-
-		_time += delta;
-		while (_time >= _period)
-		{
-			_time -= _period;
-			_currentSegmentIndex = 0;
-		}
-
+		// 确定路径模式
+		// TODO：优化架构，消除每帧的 switch 判断
 		switch (PathMode)
 		{
 			case PathModeEnum.ClosedLoop:
@@ -143,7 +121,21 @@ public partial class DotLinear : Node2D
 				_timeEffective = (_time <= _timeForward) ? (float)_time : (_period - (float)_time);
 				break;
 		}
+		// 先更新当前线段指数
 		UpdateSegmentIndex();
-		UpdatePosition();
+		// 始/末路径点坐标
+		Vector2 startPoint = Waypoints[_currentSegmentIndex];
+		Vector2 endPoint = Waypoints[(_currentSegmentIndex + 1) % Waypoints.Length];
+		// 插值比例
+		float segmentProgress = (_timeEffective - _cumulativeTimes[_currentSegmentIndex]) / 
+			(_cumulativeTimes[_currentSegmentIndex + 1] - _cumulativeTimes[_currentSegmentIndex]);
+
+		GlobalPosition = startPoint.Lerp(endPoint, segmentProgress);
 	}
+
+    protected override void OnPeriodReset()
+    {
+        _currentSegmentIndex = 0;
+    }
+
 }

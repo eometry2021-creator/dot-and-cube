@@ -1,8 +1,8 @@
 using Godot;
 
-public partial class DotExponential : Node2D
+public partial class DotExponential : DotBase
 {
-	// ===== 运动参数 =====
+	// ===== 导出参数 =====
 	[Export] // 运动时间
 	public float MoveTime { get; set; } = 0.5f;
     [Export] // 停顿时间
@@ -21,23 +21,18 @@ public partial class DotExponential : Node2D
 	[Export] // 路径点坐标
 	public Vector2[] Waypoints { get; set; } =
 	{
-		new(350, 200),
-		new(200, 459.81f),
-		new(500, 459.81f)
+		new(350f, 200f),
+		new(200f, 459.81f),
+		new(500f, 459.81f)
 	};
+
 	// ===== 内部变量 =====
-	private const float INV_LN2 = 1.442695f; // 1 / ln(2)
-	
-	private double _time = 0.0;
-	private bool _isValid = false;
 	private float[] _timeScales;      // 时间缩放系数表
-	private float _period;            // 周期
 	private float _stepTime;          // 每步（径段）时间，等于 MoveTime + WaitTime
 	private int _totalSegment;        // 总径段数，等于数组 _timeScales 的元素个数
 	private int _currentSegmentIndex; // 当前径段索引，动点处于 Waypoints[i] 与 Waypoints[i+1] 的区间
 
-	// 初始化
-	public override void _Ready()
+	protected override void Initialize()
 	{
 		if (Waypoints.Length < 2)
 		{
@@ -152,8 +147,10 @@ WaitTime 并不会冻结指数函数。动画在 MoveTime 后仍继续采样指�
 因此 WaitTime 内剩余位移已经小于视觉可察觉范围。
 这样既避免了函数截断造成的一阶导数突变，也使停止过程更加自然。
 */
-	private void UpdatePosition()
+	protected override void UpdatePosition()
 	{
+		// 首先更新当前径段索引
+		UpdateSegmentIndex();
 		// 始/末路径点坐标
 		Vector2 startPoint = new(0f, 0f);
 		Vector2 endPoint = new(0f, 0f);
@@ -196,19 +193,5 @@ WaitTime 并不会冻结指数函数。动画在 MoveTime 后仍继续采样指�
 	private void UpdateSegmentIndex()
 	{
 		_currentSegmentIndex = (int)(_time / _stepTime);
-	}
-
-	public override void _Process(double delta)
-	{
-		if (!_isValid) return;
-
-		_time += delta;
-		while (_time >= _period)
-		{
-			_time -= _period;
-		}
-
-		UpdateSegmentIndex();
-		UpdatePosition();
 	}
 }
