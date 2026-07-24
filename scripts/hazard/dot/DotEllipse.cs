@@ -39,7 +39,8 @@ public partial class DotEllipse : DotBase
 		}
 		_isValid = true;
 
-        _angularVelocity = Mathf.Tau / Period;
+        _period = Period;
+        _angularVelocity = Mathf.Tau / _period;
         _initialAngleRad = Mathf.DegToRad(InitialAngleDeg);
 		(float sinValue, float cosValue) = Mathf.SinCos(_initialAngleRad);
         Vector2 initialPosition = new(XRadius * cosValue, YRadius * sinValue);
