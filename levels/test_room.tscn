@@ -1,9 +1,74 @@
 [gd_scene format=3 uid="uid://tpxst2g888o3"]
 
 [ext_resource type="Texture2D" uid="uid://b5xk64cbawic1" path="res://artwork/bg_test.png" id="1_atxtc"]
+[ext_resource type="PackedScene" uid="uid://dsqv0vt0g5f2b" path="res://scripts/hazard/dot/dot_sine.tscn" id="2_nlfnm"]
+[ext_resource type="PackedScene" uid="uid://bvdwyy50mdumw" path="res://scripts/hazard/dot/dot_linear.tscn" id="3_hw6vf"]
+[ext_resource type="PackedScene" uid="uid://cjr30nbhi5xqf" path="res://scripts/hazard/dot/dot_ellipse.tscn" id="4_e6vom"]
+[ext_resource type="PackedScene" uid="uid://dv4hfqp7c1wqw" path="res://scripts/hazard/dot/dot_exponential.tscn" id="5_e6vom"]
 
 [node name="TestRoom" type="Node2D" unique_id=1944110412]
 
 [node name="BgTest" type="Sprite2D" parent="." unique_id=2096916248]
 position = Vector2(1024, 1024)
 texture = ExtResource("1_atxtc")
+
+[node name="DotSine1" parent="." unique_id=1777528774 instance=ExtResource("2_nlfnm")]
+Origin = Vector2(150, 50)
+Amplitude = 100.0
+Period = 2.0
+PhaseOffsetDeg = -90.0
+AngleDeg = 0.0
+
+[node name="DotSine2" parent="." unique_id=2122140806 instance=ExtResource("2_nlfnm")]
+Origin = Vector2(150, 100)
+Amplitude = 100.0
+Period = 2.0
+PhaseOffsetDeg = -70.0
+AngleDeg = 0.0
+
+[node name="DotSine3" parent="." unique_id=382848482 instance=ExtResource("2_nlfnm")]
+Origin = Vector2(150, 150)
+Amplitude = 100.0
+Period = 2.0
+PhaseOffsetDeg = -50.0
+AngleDeg = 0.0
+
+[node name="DotLinear1" parent="." unique_id=1350052469 instance=ExtResource("3_hw6vf")]
+Speed = 200.0
+PathMode = 0
+Waypoints = PackedVector2Array(250, 50, 350, 50, 350, 150, 250, 150)
+
+[node name="DotLinear2" parent="." unique_id=1061617771 instance=ExtResource("3_hw6vf")]
+Speed = 250.0
+PathMode = 1
+Waypoints = PackedVector2Array(400, 50, 500, 50, 500, 150, 400, 150)
+
+[node name="DotEllipse1" parent="." unique_id=1164868127 instance=ExtResource("4_e6vom")]
+OrbitCenter = Vector2(100, 250)
+XRadius = 50.0
+YRadius = 50.0
+Period = 1.25
+InitialAngleDeg = 90.0
+RotationDirection = 1
+
+[node name="DotEllipse2" parent="." unique_id=1614513647 instance=ExtResource("4_e6vom")]
+OrbitCenter = Vector2(100, 425)
+XRadius = 50.0
+YRadius = 75.0
+Period = 2.5
+InitialAngleDeg = 0.0
+RotationDirection = 0
+
+[node name="DotExponential1" parent="." unique_id=588298252 instance=ExtResource("5_e6vom")]
+MoveTime = 0.75
+WaitTime = 0.5
+DecayRate = 12.0
+PathMode = 1
+Waypoints = PackedVector2Array(300, 200, 400, 200, 500, 200)
+
+[node name="DotExponential2" parent="." unique_id=346804767 instance=ExtResource("5_e6vom")]
+MoveTime = 0.75
+WaitTime = 0.5
+DecayRate = 4.0
+PathMode = 0
+Waypoints = PackedVector2Array(300, 250, 400, 250, 500, 250)
