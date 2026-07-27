@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://cjr30nbhi5xqf"]
-
-[ext_resource type="PackedScene" uid="uid://bqdsyoy2waoba" path="res://scenes/hazard_dot.tscn" id="1_x2g1l"]
-[ext_resource type="Script" uid="uid://d2rledd10ra6x" path="res://scripts/hazard/dot/DotEllipse.cs" id="2_2q44v"]
-
-[node name="DotBase" unique_id=1777528774 instance=ExtResource("1_x2g1l")]
-script = ExtResource("2_2q44v")
