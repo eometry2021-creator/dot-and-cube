@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+
 public partial class DotLinear : DotBase
 {
 	// ===== 导出参数 =====

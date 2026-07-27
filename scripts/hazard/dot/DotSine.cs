@@ -2,7 +2,7 @@ using Godot;
 public partial class DotSine : DotBase
 {
 	// ===== 导出参数 =====
-	[Export] // 世界坐标（平衡位置）
+	[Export] // 平衡中心
 	public Vector2 Origin { get; set; } = new(0f, 0f);
 	[Export] // 振幅
 	public float Amplitude { get; set; } = 120f;
@@ -14,24 +14,25 @@ public partial class DotSine : DotBase
 	public float AngleDeg { get; set; } = 0f;
 
 	// ===== 内部变量 =====
-	private Vector2 _direction; // 单位向量
+	private Vector2 _direction; // 单位方向向量
 	private float _angularVelocity;
 	private float _phaseOffsetRad;
 
 	protected override void Initialize()
 	{
 		_period = Period;
-		// 计算角速度 ω = 2π / T
 		if (_period <= 0.01f)
 		{
 			GD.PrintErr("周期必须大于 0。");
 			return;
 		}
 		_isValid = true;
+
+		// 计算角速度 ω = 2π / T
 		_angularVelocity = Mathf.Tau / _period;
 		// 初相位弧度
 		_phaseOffsetRad = Mathf.DegToRad(PhaseOffsetDeg);
-		// 角度转弧度
+		// 旋转角弧度
 		float angleRad = Mathf.DegToRad(AngleDeg);
 		// 单位方向向量
 		(float sinValue, float cosValue) = Mathf.SinCos(angleRad);

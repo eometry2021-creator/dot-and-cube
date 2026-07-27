@@ -6,16 +6,9 @@
 🚧 This section is under construction... 🚧
 ## 特色 Features
 🚧 This section is under construction... 🚧
-## 开发记录 Development Notes
-### 2026/07/21
-创建仓库。上传了已经完成的 4 种 Dot 类障碍物脚本与其他资源库。
-### 2026/07/23
-目录重构 script/ → scripts/，scene/ → scenes/；新增 levels/ 目录；<br>
-提取 DotBase 抽象基类；<br>
-四个子类继承 DotBase 并简化。
-### 2026/07/24
-更新关卡场景 test_room，调试证明所有的 Dot 类均能正常运行；<br>
-修复了 DotEllipse 中 Period 未赋值给 _period 导致引擎内部归一化计算失败的 bug。
+## 更新日志 Change Log
+这个等完成了第一版 demo，开放 releases 下载后再开放罢，，，<br>
+如欲了解详细的开发过程，详见 DEVELOPMENT_NOTES。
 ## 许可协议 License
 本项目基于 MIT License 许可协议开源。
 
