@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bqdsyoy2waoba"]
+
+[ext_resource type="Script" uid="uid://bcra1wconilpv" path="res://scripts/hazard/dot/DotBase.cs" id="1_2ru8d"]
+[ext_resource type="Texture2D" uid="uid://by7577n0dv3vl" path="res://artwork/dot_20.png" id="2_ntgtk"]
+[ext_resource type="Texture2D" uid="uid://x3av6vntpyi5" path="res://artwork/grazecircle_48_gray.png" id="3_jv5v3"]
+[ext_resource type="Script" uid="uid://1d5fpno2m2vr" path="res://scripts/hazard/dot/GrazeCircle.cs" id="4_ntgtk"]
+[ext_resource type="AudioStream" uid="uid://dht6stjrh50uw" path="res://sound/snd_graze.wav" id="5_jv5v3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gj63"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3owqy"]
+radius = 23.0
+
+[node name="DotBase" type="Node2D" unique_id=1777528774]
+script = ExtResource("1_2ru8d")
+
+[node name="Dot" type="Sprite2D" parent="." unique_id=1655216558]
+texture = ExtResource("2_ntgtk")
+
+[node name="Area2D" type="Area2D" parent="Dot" unique_id=564099289]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dot/Area2D" unique_id=1464794294]
+shape = SubResource("CircleShape2D_8gj63")
+
+[node name="GrazeCircle" type="Sprite2D" parent="." unique_id=283879415]
+texture = ExtResource("3_jv5v3")
+script = ExtResource("4_ntgtk")
+
+[node name="Area2D" type="Area2D" parent="GrazeCircle" unique_id=734038323]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrazeCircle/Area2D" unique_id=1807763168]
+shape = SubResource("CircleShape2D_3owqy")
+
+[node name="GrazeSnd" type="AudioStreamPlayer2D" parent="GrazeCircle" unique_id=286904994]
+stream = ExtResource("5_jv5v3")

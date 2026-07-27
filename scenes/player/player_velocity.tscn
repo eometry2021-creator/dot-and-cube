@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dug87occg1x1a"]
+
+[ext_resource type="Texture2D" uid="uid://di2jabwv2l1rg" path="res://artwork/cube_32.png" id="2_kbsbm"]
+[ext_resource type="Script" uid="uid://bkyt8gxtlhudn" path="res://scripts/player/PlayerVelocity.cs" id="2_kiv8a"]
+[ext_resource type="Script" uid="uid://dnk7a7u1e8phl" path="res://scenes/player/Camera.cs" id="3_kbsbm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3owqy"]
+size = Vector2(32, 32)
+
+[node name="PlayerVelocity" type="CharacterBody2D" unique_id=1250115198]
+script = ExtResource("2_kiv8a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=589242475]
+texture = ExtResource("2_kbsbm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=168625852]
+shape = SubResource("RectangleShape2D_3owqy")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=533934793]
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+script = ExtResource("3_kbsbm")
