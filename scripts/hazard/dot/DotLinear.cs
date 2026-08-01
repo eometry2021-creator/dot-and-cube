@@ -6,13 +6,13 @@ public partial class DotLinear : DotBase
 	// ===== 导出参数 =====
 	[Export] // 每秒移动速度
 	public float Speed { get; set; } = 150f;
-	public enum PathModeEnum
+	public enum PathModes
 	{
 		ClosedLoop,
 		BackAndForth
 	}
 	[Export] // 路径模式
-	public PathModeEnum PathMode { get; set; } = PathModeEnum.ClosedLoop;
+	public PathModes PathMode { get; set; } = PathModes.ClosedLoop;
 
 	[Export] // 路径点坐标
 	public Vector2[] Waypoints { get; set; } =
@@ -26,10 +26,10 @@ public partial class DotLinear : DotBase
 	// ===== 内部变量 =====
 	private List<float> _cumulativeTimes = new(); // 累计时间表
 	//TODO：优化架构，作为数组声明而非列表
-	private float _distance;                      // 累计距离
-	private float _timeForward;                   // 正向时间，仅应用于 BackAndForth，等于半周期
-	private float _timeEffective;                 // 有效时间，在 BackAndForth 的情况下使用三角波折叠映射进度
-	private int _currentSegmentIndex;             // 当前线段指数，动点处于 Waypoints[i] 与 Waypoints[i+1] 的区间
+	private float _distance;          // 累计距离
+	private float _timeForward;       // 正向时间，仅应用于 BackAndForth，等于半周期
+	private float _timeEffective;     // 有效时间，在 BackAndForth 的情况下使用三角波折叠映射进度
+	private int _currentSegmentIndex; // 当前线段指数，动点处于 Waypoints[i] 与 Waypoints[i+1] 的区间
 
 	protected override void Initialize()
 	{
@@ -68,7 +68,7 @@ public partial class DotLinear : DotBase
 		}
 		switch (PathMode)
 		{
-			case PathModeEnum.ClosedLoop:
+			case PathModes.ClosedLoop:
 				// 闭环多一段：最后一个节点回到起点
 				if (Waypoints[Waypoints.Length - 1].DistanceTo(Waypoints[0]) <= 0.01f)
 				{
@@ -81,7 +81,7 @@ public partial class DotLinear : DotBase
 				_period = _cumulativeTimes[_cumulativeTimes.Count - 1];
 				break;
 
-			case PathModeEnum.BackAndForth:
+			case PathModes.BackAndForth:
 				_timeForward = _distance / Speed;
 				_period = _timeForward * 2f;
 				break;
@@ -100,7 +100,7 @@ public partial class DotLinear : DotBase
 		{
 			_currentSegmentIndex += 1;
 		}
-		if (PathMode == PathModeEnum.BackAndForth)
+		if (PathMode == PathModes.BackAndForth)
 		{
 			while (_currentSegmentIndex > 0 && _timeEffective < _cumulativeTimes[_currentSegmentIndex])
 			{
@@ -115,10 +115,10 @@ public partial class DotLinear : DotBase
 		// TODO：优化架构，消除每帧的 switch 判断
 		switch (PathMode)
 		{
-			case PathModeEnum.ClosedLoop:
+			case PathModes.ClosedLoop:
 				_timeEffective = (float)_time; // 闭环不需要折叠，直接用
 				break;
-			case PathModeEnum.BackAndForth:
+			case PathModes.BackAndForth:
 				_timeEffective = (_time <= _timeForward) ? (float)_time : (_period - (float)_time);
 				break;
 		}

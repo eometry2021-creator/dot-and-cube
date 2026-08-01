@@ -10,13 +10,13 @@ public partial class DotExponential : DotBase
     [Export(PropertyHint.Range, "4.0,12.0,0.2")] // 指数衰减率，f(t) = 1 - 2 ^ (-r × t) 中的 r
     public float DecayRate { get; set; } = 6.0f;
 	// 两种路径模式的枚举
-	public enum PathModeEnum
+	public enum PathModes
 	{
 		ClosedLoop,
 		BackAndForth
 	}
 	[Export] // 路径模式
-	public PathModeEnum PathMode { get; set; } = PathModeEnum.ClosedLoop;
+	public PathModes PathMode { get; set; } = PathModes.ClosedLoop;
 
 	[Export] // 路径点坐标
 	public Vector2[] Waypoints { get; set; } =
@@ -39,14 +39,14 @@ public partial class DotExponential : DotBase
 			GD.PushError("错误：列表 Waypoints 至少需要 2 个元素。");
 			return;
 		}
-		if (MoveTime <= 0.01f || WaitTime <= 0.01f)
+		if (MoveTime <= 0.01f || WaitTime < 0f)
 		{
 			GD.PushError("错误：移动时间或停顿时间必须大于 0。");
 			return;
 		}
 		_isValid = true;
 
-		_totalSegment = PathMode == PathModeEnum.ClosedLoop
+		_totalSegment = PathMode == PathModes.ClosedLoop
     		? Waypoints.Length
     		: 2 * (Waypoints.Length - 1);
 		_timeScales = new float[_totalSegment];
@@ -107,7 +107,7 @@ Lerp 插值比例 -> 预运算，乘以 INV_LN2 -> 最终数组
 		}
 		switch (PathMode)
 		{
-			case PathModeEnum.ClosedLoop:
+			case PathModes.ClosedLoop:
 				// 闭环最后一段：最后一个节点回到起点
 				float segmentLength = Waypoints[Waypoints.Length - 1].DistanceTo(Waypoints[0]);
 				if (segmentLength <= 0.01f)
@@ -120,7 +120,7 @@ Lerp 插值比例 -> 预运算，乘以 INV_LN2 -> 最终数组
 				_timeScales[Waypoints.Length - 1] = MoveTime / Mathf.Max(domainLength, 1.0f);
 			break;
 
-			case PathModeEnum.BackAndForth:
+			case PathModes.BackAndForth:
 				// 往返：镜像映射
 				for (int i = Waypoints.Length - 1; i < _timeScales.Length; i++)
 				{
@@ -160,12 +160,12 @@ WaitTime 并不会冻结指数函数。动画在 MoveTime 后仍继续采样指�
 		float segmentProgress = 0f;
 		switch (PathMode)
 		{
-			case PathModeEnum.ClosedLoop:
+			case PathModes.ClosedLoop:
 				startPoint = Waypoints[_currentSegmentIndex];
 				endPoint = Waypoints[(_currentSegmentIndex + 1) % Waypoints.Length];
 			break;
 
-			case PathModeEnum.BackAndForth:
+			case PathModes.BackAndForth:
 				int index;
 				if (_currentSegmentIndex < Waypoints.Length - 1)
     			{

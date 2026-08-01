@@ -50,7 +50,7 @@ public partial class GrazeCircle : Sprite2D
         // 停止之前的动画（如有）
         _grazeTween?.Kill();
 
-        // 立即设置透明度为 0
+        // 立即设置不透明度为 100%
         Modulate = Opaque;
     }
 

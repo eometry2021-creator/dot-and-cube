@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dht6stjrh50uw" path="res://sound/snd_graze.wav" id="5_jv5v3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8gj63"]
-radius = 9.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3owqy"]
 radius = 23.0
