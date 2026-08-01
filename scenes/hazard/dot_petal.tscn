@@ -5,3 +5,9 @@
 
 [node name="DotBase" unique_id=1777528774 instance=ExtResource("1_5t5qf")]
 script = ExtResource("2_osfnh")
+Center = Vector2(1024, 1024)
+PetalCount = 4
+MaxRadius = 200.0
+PetalPeriod = 1.2
+PhaseOffsetDeg = 45.0
+RotationDeg = 0.0
