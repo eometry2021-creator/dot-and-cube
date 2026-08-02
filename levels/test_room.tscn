@@ -17,48 +17,55 @@ texture = ExtResource("1_atxtc")
 [node name="PlayerVelocity" parent="." unique_id=1250115198 instance=ExtResource("6_np6ep")]
 
 [node name="DotSine1" parent="." unique_id=1777528774 instance=ExtResource("2_nlfnm")]
-Center = Vector2(150, 50)
-Amplitude = 100.0
+Center = Vector2(128, 64)
+Amplitude = 64.0
 Period = 2.0
 PhaseOffsetDeg = -90.0
 RotationDeg = 0.0
 
 [node name="DotSine2" parent="." unique_id=2122140806 instance=ExtResource("2_nlfnm")]
-Center = Vector2(150, 100)
-Amplitude = 100.0
+Center = Vector2(128, 128)
+Amplitude = 64.0
 Period = 2.0
 PhaseOffsetDeg = -70.0
 RotationDeg = 0.0
 
 [node name="DotSine3" parent="." unique_id=382848482 instance=ExtResource("2_nlfnm")]
-Center = Vector2(150, 150)
-Amplitude = 100.0
+Center = Vector2(128, 192)
+Amplitude = 64.0
 Period = 2.0
 PhaseOffsetDeg = -50.0
+RotationDeg = 0.0
+
+[node name="DotSine4" parent="." unique_id=381900906 instance=ExtResource("2_nlfnm")]
+Center = Vector2(128, 256)
+Amplitude = 64.0
+Period = 2.0
+PhaseOffsetDeg = -30.0
 RotationDeg = 0.0
 
 [node name="DotLinear1" parent="." unique_id=1350052469 instance=ExtResource("3_hw6vf")]
 Speed = 200.0
 PathMode = 0
-Waypoints = PackedVector2Array(250, 50, 350, 50, 350, 150, 250, 150)
+Waypoints = PackedVector2Array(256, 64, 384, 64, 384, 256, 256, 256)
 
 [node name="DotLinear2" parent="." unique_id=1061617771 instance=ExtResource("3_hw6vf")]
 Speed = 250.0
 PathMode = 1
-Waypoints = PackedVector2Array(400, 50, 500, 50, 500, 150, 400, 150)
+Waypoints = PackedVector2Array(448, 64, 576, 64, 576, 128, 448, 128, 448, 192, 576, 192, 576, 256, 448, 256)
 
 [node name="DotEllipse1" parent="." unique_id=1164868127 instance=ExtResource("4_e6vom")]
-OrbitCenter = Vector2(100, 250)
-XRadius = 50.0
-YRadius = 50.0
+OrbitCenter = Vector2(128, 384)
+XRadius = 64.0
+YRadius = 64.0
 Period = 1.25
 InitialAngleDeg = 90.0
 RotationDirection = 1
 
 [node name="DotEllipse2" parent="." unique_id=1614513647 instance=ExtResource("4_e6vom")]
-OrbitCenter = Vector2(100, 425)
-XRadius = 50.0
-YRadius = 75.0
+OrbitCenter = Vector2(704, 224)
+XRadius = 64.0
+YRadius = 32.0
 Period = 2.5
 InitialAngleDeg = 0.0
 RotationDirection = 0
@@ -68,20 +75,29 @@ MoveTime = 0.75
 WaitTime = 0.5
 DecayRate = 12.0
 PathMode = 1
-Waypoints = PackedVector2Array(300, 200, 400, 200, 500, 200)
+Waypoints = PackedVector2Array(640, 64, 704, 64, 768, 64)
 
 [node name="DotExponential2" parent="." unique_id=346804767 instance=ExtResource("5_e6vom")]
 MoveTime = 0.75
 WaitTime = 0.5
 DecayRate = 2.0
 PathMode = 0
-Waypoints = PackedVector2Array(300, 250, 400, 250, 500, 250)
+Waypoints = PackedVector2Array(640, 128, 704, 128, 768, 128)
 
-[node name="DotPetal1" parent="." unique_id=1953722434 instance=ExtResource("7_wyybw")]
-PetalCount = 5
-PhaseOffsetDeg = 0.0
-RotationDeg = 72.0
+[node name="DotPetal1" parent="." unique_id=65810532 instance=ExtResource("7_wyybw")]
+Center = Vector2(960, 192)
+MaxRadius = 128.0
+PetalPeriod = 1.25
+RotationDeg = -60.0
 
-[node name="DotPetal2" parent="." unique_id=196106603 instance=ExtResource("7_wyybw")]
-PetalCount = 5
-RotationDeg = 72.0
+[node name="DotPetal2" parent="." unique_id=270328898 instance=ExtResource("7_wyybw")]
+Center = Vector2(960, 192)
+MaxRadius = 128.0
+PetalPeriod = 1.25
+RotationDeg = 60.0
+
+[node name="DotPetal3" parent="." unique_id=875418090 instance=ExtResource("7_wyybw")]
+Center = Vector2(960, 192)
+MaxRadius = 128.0
+PetalPeriod = 1.25
+RotationDeg = 180.0
