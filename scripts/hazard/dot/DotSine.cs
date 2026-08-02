@@ -8,9 +8,9 @@ public partial class DotSine : DotBase
 	public float Amplitude { get; set; } = 120f;
 	[Export] // 周期
 	public float Period { get; set; } = 3f;
-	[Export] // 初相位（角度制）
+	[Export(PropertyHint.Range, "-180.0, 180.0, 0.1")] // 初相位（角度制）
 	public float PhaseOffsetDeg { get; set; } = -90f;
-	[Export] // 旋转角度（角度制）
+	[Export(PropertyHint.Range, "-180.0, 180.0, 0.1")] // 旋转角度（角度制）
 	public float RotationDeg { get; set; } = 0f;
 
 	// ===== 内部变量 =====
@@ -40,6 +40,7 @@ public partial class DotSine : DotBase
 		_motionAxis *= Amplitude;
 		// 按照初相位设置初始位置
 		float initialRotation = Mathf.Sin(_phaseOffsetRad);
+		
 		GlobalPosition = Center + _motionAxis * initialRotation;
 	}
 
